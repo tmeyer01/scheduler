@@ -16,7 +16,7 @@ export default function DayList(props) {
 
   console.log(days[1].id)
 
-  const outPut = days.map(dayItems => <DayListItem id={dayItems.id} name={dayItems.name} spots={dayItems.spots} selected={daySelect(dayItems.name, props.day)} setDay={props.setDay}/>)
+  const outPut = days.map(dayItems => <DayListItem key={dayItems.id} id={dayItems.id} name={dayItems.name} spots={dayItems.spots} selected={daySelect(dayItems.name, props.day)} setDay={props.setDay}/>)
   
    return (
      <ul>
