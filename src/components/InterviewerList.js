@@ -1,28 +1,32 @@
 import React from "react";
-//import  InterviewerList from "./InterviewerList";
+import  InterviewerListItem from "./InterviewerListItem";
+import "./InterviewerList.scss";
+
+
+function IntSelect (interviewer, selectedInterviewer){
+  if(interviewer === selectedInterviewer){
+    return true;
+    //return interviewer;
+  }
+  return false;
+}
 
 
 
-// function daySelect (day, selectedDay){
-//   if(day === selectedDay){
-//     return true;
-//   }
-//   return false;
-// }
 
 export default function InterviewerList(props) {
   
-  // const {days} = props;
+  const {interviewers} = props;
 
-  // console.log(days[1].id)
+  // console.log("THE INTERVIEWLIST PROPS", interviewers)
+  // console.log("PROPS", props)
 
-  // const outPut = days.map(dayItems => <DayListItem key={dayItems.id} id={dayItems.id} name={dayItems.name} 
-  // spots={dayItems.spots} selected={daySelect(dayItems.name, props.day)} setDay={props.setDay}/>)
-  
+  const outPut = interviewers.map(intItems => <InterviewerListItem key={intItems.id} setInterviewer={props.setInterviewer} name={intItems.name} avatar={intItems.avatar} selected={IntSelect(intItems.id, props.interviewer)} />);
+
    return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
-      <ul className="interviewers__list"></ul>
+      <ul className="interviewers__list">{outPut}</ul>
     </section>
   ); 
  }
