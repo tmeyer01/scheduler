@@ -13,7 +13,9 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
-import Show from "components/Appointment/Show"
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from  "components/Appointment/Status";
 
 storiesOf("Appointment", module)
   .addParameters({
@@ -30,7 +32,17 @@ storiesOf("Appointment", module)
       onEdit={action("onEdit")}
       onDelete={action("onDelete")}
     />
-  ));
+  ))
+  .add("Confrim", ()=> (
+    <Confirm 
+      message="Delete the appointment?"
+      onConfirm={action("onConfirm")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Status", ()=> <Status message="Deleting" />);
+
+
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
@@ -63,15 +75,6 @@ storiesOf("InterviewerListItem", module)
       setInterviewer={() => action("setInterviewer")(interviewer.id)}
     />
   ));
-
-
-
-
-
-
-
-
-
 
 
 
