@@ -1,99 +1,51 @@
-import React, {useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
-import Appointment from './Appointment';
-import { getAppointmentsForDay } from "helpers/selectors";
-
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer:{
-//         id: 3,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm",
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "Archie Andrews",
-//       interviewer:{
-//         id: 4,
-//         name: "Cohana Roy",
-//         avatar: "https://i.imgur.com/FK8V841.jpg",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "4pm",
-//   }
-// ];
-
-
-
+import Appointment from "./Appointment";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
-  // const [day, setDay] = useState("Tuesday");
-  // const [days, setDays] = useState([]);
-
-  
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers:{}
-  },);
-
+    interviewers: {},
+  });
 
   useEffect(() => {
     // axios.get('/api/days').then(response => {
-      
-    //   setState(prev => ({...prev, days: response.data})); 
-
+    //   setState(prev => ({...prev, days: response.data}));
     // })
     // .then(() => {
     //   //setState(prev => ({ ...prev, days }));
     // });
 
     Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
     ]).then((all) => {
-      console.log("days: ", all[0].data)
-      console.log("appointments: ", all[1].data) 
-      console.log("interviewers: ", all[2].data) 
+      console.log("days: ", all[0].data);
+      console.log("appointments: ", all[1].data);
+      console.log("interviewers: ", all[2].data);
 
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-    })
+      setState((prev) => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data,
+        interviewers: all[2].data,
+      }));
+    });
   }, []);
-  
-  
-  
-  const setDay = day => setState({ ...state, day });
-  //const setDays = days =>  setState({...state, days});
+
+  const setDay = (day) => setState({ ...state, day });
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  console.log("DAILY APTS", dailyAppointments)
-  console.log("STATE DOT DAY", state.day)
-  console.log("STATE", state)
-
   const mappedApts = dailyAppointments.map((apt) => {
+    const interview = getInterview(state, apt.interview)
+    
     return (
       <Appointment
         key={apt.id}
@@ -101,11 +53,8 @@ export default function Application(props) {
         time={apt.time}
         interview={apt.interview}
       />
-    )
-  })
-
- 
-
+    );
+  });
 
   return (
     <main className="layout">
@@ -117,11 +66,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList 
-            days={state.days}
-            value={state.day} 
-            onChange={setDay}  
-            />
+          <DayList days={state.days} value={state.day} onChange={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -130,7 +75,6 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-       
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
         {mappedApts}
         {/* <Appointment key={mappedApts.id} {...mappedApts} /> */}
