@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Show(props) {
   
-  console.log("SHOW COM PROPS", props)
+  //console.log("SHOW COM PROPS", props)
   
   return (
     <main className="appointment__card appointment__card--show">
