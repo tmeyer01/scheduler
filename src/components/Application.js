@@ -3,7 +3,8 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -12,24 +13,14 @@ export default function Application(props) {
     appointments: {},
     interviewers: {},
   });
-
+  
   useEffect(() => {
-    // axios.get('/api/days').then(response => {
-    //   setState(prev => ({...prev, days: response.data}));
-    // })
-    // .then(() => {
-    //   //setState(prev => ({ ...prev, days }));
-    // });
-
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
-      console.log("days: ", all[0].data);
-      console.log("appointments: ", all[1].data);
-      console.log("interviewers: ", all[2].data);
-
+    
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -42,9 +33,40 @@ export default function Application(props) {
   const setDay = (day) => setState({ ...state, day });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  
+  const interview = getInterview(state, state.interviewers)
+  
+  const dailyInterviews = getInterviewersForDay(state, state.day)
+
+
+  const bookInterview = (id, interview) =>{
+    
+    console.log(id, interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments
+    });
+
+
+  }
+
+  //console.log("PROPS", props)
+  //console.log("PROPS", props.bookInterview )
 
   const mappedApts = dailyAppointments.map((apt) => {
-    const interview = getInterview(state, apt.interview)
+    
+    
     
     return (
       <Appointment
@@ -52,9 +74,13 @@ export default function Application(props) {
         id={apt.id}
         time={apt.time}
         interview={apt.interview}
+        interviewers={dailyInterviews}
+        bookInterview={bookInterview}
       />
     );
   });
+
+  
 
   return (
     <main className="layout">
@@ -75,9 +101,9 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+     
         {mappedApts}
-        {/* <Appointment key={mappedApts.id} {...mappedApts} /> */}
+  
         <Appointment key="last" time="5pm" />
       </section>
     </main>
