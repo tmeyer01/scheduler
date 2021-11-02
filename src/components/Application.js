@@ -31,11 +31,8 @@ export default function Application(props) {
   }, []);
 
   const setDay = (day) => setState({ ...state, day });
-
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  
   const interview = getInterview(state, state.interviewers)
-  
   const dailyInterviews = getInterviewersForDay(state, state.day)
 
 
@@ -43,21 +40,23 @@ export default function Application(props) {
     
     console.log(id, interview);
 
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
 
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
 
-    setState({
-      ...state,
-      appointments
-    });
-
+      return axios.put(`/api/appointments/${id}`, {interview}) 
+      .then((res) => {
+        setState({
+        ...state,
+        appointments
+      });
+    })
 
   }
 
@@ -80,8 +79,6 @@ export default function Application(props) {
     );
   });
 
-  
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -101,9 +98,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-     
         {mappedApts}
-  
         <Appointment key="last" time="5pm" />
       </section>
     </main>
