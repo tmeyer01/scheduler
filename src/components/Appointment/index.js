@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import "./styles.scss";
 import Header from './Header';
 import Status from './Status'
@@ -6,7 +6,8 @@ import Show from './Show';
 import Empty from './Empty';
 import Form from "./Form";
 import Confirm from "./Confirm";
-import useVisualMode from "hooks/useVisualMode"
+import Error from "./Error";
+import useVisualMode from "hooks/useVisualMode";
 
 //import getInterviewersForDay from "helpers/selectors"
 
@@ -21,6 +22,9 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRMING = "CONFIRMING";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR SAVE";
+  const ERROR_DELETE = "ERROR DELETE";
+
 
   const {mode, transition, back} = useVisualMode(
     interview ? SHOW : EMPTY
@@ -36,6 +40,9 @@ export default function Appointment(props) {
     .then(()=>{
       transition(SHOW);
     })
+    .catch(()=>{
+      transition(ERROR_SAVE, true);
+    })
   }
 
   const deleteInterview = () => {
@@ -44,6 +51,9 @@ export default function Appointment(props) {
     .then(()=>{
       transition(EMPTY);
 
+    })
+    .catch(()=>{
+      transition(ERROR_DELETE, true);
     })
   }
 
@@ -59,6 +69,8 @@ export default function Appointment(props) {
       {mode === DELETING && <Status message="Deleteing"/>}
       {mode === CONFIRMING && <Confirm onConfirm={deleteInterview} onCancel={back}/>}
       {mode === EDIT && <Form interviewers={interviewers} onCancel={()=> back()} onSave={save}  student={interview.student} interviewer={interview.interviewer}/>}
+      {mode === ERROR_DELETE && <Error message="Deleting" onClose={back} /> }
+      {mode === ERROR_SAVE && <Error message="Saving" onClose={back}/> }
     </article>
   )
 }
