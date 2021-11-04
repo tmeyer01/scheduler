@@ -9,7 +9,7 @@ import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
-//import getInterviewersForDay from "helpers/selectors"
+//Function that shows appointments
 
 export default function Appointment(props) {
   
@@ -66,7 +66,7 @@ export default function Appointment(props) {
       )}
       {mode === CREATE && <Form interviewers={interviewers} onCancel={()=> back()} onSave={save} />}
       {mode === SAVING && <Status message="Saving"/>}
-      {mode === DELETING && <Status message="Deleteing"/>}
+      {mode === DELETING && <Status message="Deleting"/>}
       {mode === CONFIRMING && <Confirm onConfirm={deleteInterview} onCancel={back}/>}
       {mode === EDIT && <Form interviewers={interviewers} onCancel={()=> back()} onSave={save}  student={interview.student} interviewer={interview.interviewer}/>}
       {mode === ERROR_DELETE && <Error message="Deleting" onClose={back} /> }

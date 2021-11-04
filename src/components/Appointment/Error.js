@@ -1,5 +1,6 @@
 import React from "react";
 
+//function that shows error message in the unlikely event of an error
 export default function Error(props) {
   return (
     <main className="appointment__card appointment__card--error">

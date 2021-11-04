@@ -1,10 +1,9 @@
 import React from 'react';
 import Button from 'components/Button';
 
+//function that asks for confrimation when deleteing appoitnments 
 export default function Confirm(props) {
-  
-  console.log("PROPS", props)
-  
+
   return (
     <main className="appointment__card appointment__card--confirm">
       <h1 className="text--semi-bold">Delete the appointment?</h1>

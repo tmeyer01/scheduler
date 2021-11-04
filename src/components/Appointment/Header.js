@@ -1,5 +1,6 @@
 import React from 'react'
 
+//function shows the head items 
 export default function Header(props) {
   return (
     <header className="appointment__time">
