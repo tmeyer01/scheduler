@@ -2,7 +2,7 @@
 Interview Scheduler is a single web application built using the JavaScript library React. It allows students to book interviews with mentors when there are interview spots available. This application has been tested with Jest and Cypress. 
 
 To Book an appointment, click on a day with availble spots. Then click on the + icon this represents where there are available times. 
-A student must leave their name and select a mentor they would like to book an appointment with. A name must be present in order to save their appointment to the database.  
+A student must leave their name and select a mentor they would like to book an appointment with. A name must be present in order to save their appointment to a PostgreSQL database.  
 
 If a student has made a mistake after booking the appointment, they can edit it by clicking on the pen and paper icon on the bottom right hand side of the appointment. 
 
@@ -39,3 +39,5 @@ npm run storybook
 !["Confirmation to delete"](public/images/githubreadmePhotos/DoYouDelete.jpg)
 !["Deleting"](public/images/githubreadmePhotos/Deleting.jpg)
 !["Error"](public/images/githubreadmePhotos/Error.png)
+
+
