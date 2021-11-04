@@ -1,5 +1,5 @@
 # Interview Scheduler
-Interview Scheduler is a single page full stack web application built with React. It allows Students to book Interviews with mentors when are interview spots remaining avalible. This application has been tested with Jest and Cypress. 
+Interview Scheduler is a single page full stack web application built with React. It allows Students to book Interviews with mentors when are interview spots remaining avalible. This application has been tested with Jest, Cypress, and Storybook. 
 
 To Book an appointment, click on a day with availble spots. Then click on the + icon this represents where there are avialble times. 
 A student must leave there name and select a mentor they would like to book an appointment with. A name must be present in order to save their appointment to the database.  
