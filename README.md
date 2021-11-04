@@ -36,6 +36,6 @@ npm run storybook
 !["How to use"](public/images/githubreadmePhotos/HowToUse.jpg)
 !["Making Appointment"](public/images/githubreadmePhotos/MakingAPT.jpg)
 !["Saving Appointment"](public/images/githubreadmePhotos/Saving.jpg)
-!["Confirmation to delete"](public/images/githubreadmePhotos/DoYouDekete.jpg)
+!["Confirmation to delete"](public/images/githubreadmePhotos/DoYouDelete.jpg)
 !["Deleting"](public/images/githubreadmePhotos/Deleting.jpg)
 !["Error"](public/images/githubreadmePhotos/Error.png)
