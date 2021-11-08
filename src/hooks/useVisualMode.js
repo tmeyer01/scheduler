@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+
+//Func that changes the state array 
 export default function useVisualMode(initial) {
-  const [mode, setMode] = useState(initial);
+  
   const [history, setHistory] = useState([initial]);
 
   const transition = (newMode, replace = false) => {
@@ -13,10 +15,11 @@ export default function useVisualMode(initial) {
       }
       return [...prev, newMode];
     });
-    setMode(newMode);
+   
   };
 
   const back = () => {
+    console.log("HISTORY", history)
     if (history.length < 1) {
       return;
     }
@@ -24,7 +27,11 @@ export default function useVisualMode(initial) {
       prev.pop();
       return [...prev];
     });
-    setMode(history[history.length - 2]);
+    
+
+
   };
+  //Last item in the array is always the current mode 
+  const mode = history[history.length - 1]
   return { mode, transition, back };
 }

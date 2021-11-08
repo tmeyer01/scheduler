@@ -43,22 +43,25 @@ export default function Appointment(props) {
   };
   //Func. deletes interview 
   const deleteInterview = () => {
-    transition(DELETING);
+   
+    transition(DELETING, true);
     cancelInterview(id)
       .then(() => {
-        transition(EMPTY);
+        transition(EMPTY, true);
       })
       .catch(() => {
         transition(ERROR_DELETE, true);
       });
   };
 
+    console.log("interview ->",interview)
   return (
     <article className="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
+          
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={() => transition(CONFIRMING)}
@@ -68,7 +71,7 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form
           interviewers={interviewers}
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
         />
       )}
@@ -83,11 +86,11 @@ export default function Appointment(props) {
           onCancel={() => back()}
           onSave={save}
           student={interview.student}
-          interviewer={interview.interviewer}
+          interviewer={interview.interviewer.id}
         />
       )}
-      {mode === ERROR_DELETE && <Error message="Deleting" onClose={back} />}
-      {mode === ERROR_SAVE && <Error message="Saving" onClose={back} />}
+      {mode === ERROR_DELETE && <Error message="Unable to delete appointment" onClose={back} />}
+      {mode === ERROR_SAVE && <Error message="Unable to save appointment" onClose={back} />}
     </article>
   );
 }
