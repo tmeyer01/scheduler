@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-//Func that changes the state array 
+//Func. that changes the state array 
 export default function useVisualMode(initial) {
   
   const [history, setHistory] = useState([initial]);
@@ -27,8 +27,6 @@ export default function useVisualMode(initial) {
       prev.pop();
       return [...prev];
     });
-    
-
 
   };
   //Last item in the array is always the current mode 

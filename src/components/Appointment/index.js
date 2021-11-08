@@ -10,7 +10,6 @@ import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 //Function that shows appointments
-
 export default function Appointment(props) {
   const { id, bookInterview, cancelInterview, interviewers, interview, time } = props;
 

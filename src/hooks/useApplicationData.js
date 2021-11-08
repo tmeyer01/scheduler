@@ -9,7 +9,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  //Function to book interview and update state w/ new interview 
+  //Func.  book interviews and update state w/ new interview 
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
