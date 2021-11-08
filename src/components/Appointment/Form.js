@@ -12,14 +12,20 @@ export default function Form(props) {
     setStudent("");
     setInterviewer(null);
   }
+  //Func. clears input, and cancels interview 
   function cancel() {
     reset();
     props.onCancel();
   }
 
+  //Func. makes sure student name is entered and interviewer is selected
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null){
+      setError("An interviewer must be selected to makes appointment");
       return;
     }
     setError("");

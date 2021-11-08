@@ -9,6 +9,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
+  //Function to book interview and update state w/ new interview 
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -30,6 +31,7 @@ export default function useApplicationData() {
     });
   };
 
+  //Function to delete cancel interview and update state w/ empty slot 
   const cancelInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -55,6 +57,7 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
+  //API server call, sets state for days, appointments and interviewers 
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
@@ -70,12 +73,18 @@ export default function useApplicationData() {
     });
   }, []);
 
+
+
+  // Func. that updates the number of spots avalible shown in navigation bar
   const spotsRemaining = (state, appointments) => {
     const previousDays = [...state.days];
+    //Find correct day obj inside previous days array 
     const day = previousDays.find((d) => d.name === state.day);
 
+    //Find number of spots for day 
     let spots = 0;
 
+    //Find avaible appointments for the day 
     for (const appointmentId of day.appointments) {
       const appointment = appointments[appointmentId];
       if (!appointment.interview) {
@@ -83,7 +92,10 @@ export default function useApplicationData() {
       }
     }
 
+    //Create new found day object 
     const newDay = { ...day, spots };
+    
+    //Create newDays array
     const newDays = previousDays.map((day) =>
       day.name === state.day ? newDay : day
     );
